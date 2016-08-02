@@ -769,7 +769,7 @@ armyc2.c2sd.renderer.utilities.SymbolUtilities.rendererSettings = armyc2.c2sd.re
             //they clearly do.
             return true;
         }
-        else if(unitModifier === (ModifiersUnits.SCC_SONAR_CLASSIFICATION_CONFIDENCE))
+        else if(unitModifier.equals(ModifiersUnits.SCC_SONAR_CLASSIFICATION_CONFIDENCE))
         {
            if(this.isSubSurface(symbolID))
            {

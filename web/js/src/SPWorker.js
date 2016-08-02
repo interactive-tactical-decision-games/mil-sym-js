@@ -20,6 +20,9 @@ var e.data = {base64:true, batch:batch};
     symbolBounds:
     imageBounds:
     base64:svg string like: "data:image/svg+xml;base64,[SVG string after run through btoa()]". 
+    anchorPoint:
+    symbolBounds:
+    imageBounds:
 }
 */
 
@@ -92,7 +95,7 @@ onmessage = function(e)
                 var returnBatch = [];
                 var len = e.data.batch.length;
                 var item = null;
-                
+            
                 for(var i = 0; i < len; i++)
                 {
                     item = batch[i];
@@ -107,7 +110,7 @@ onmessage = function(e)
                     }
                     else
                         returnVal.svg = si.getSVG();
-                    
+            
                     returnBatch.push(returnVal);
                 }
                 if(si !== null)
@@ -137,9 +140,9 @@ onmessage = function(e)
                     }
                     else
                         returnVal.svg = si.getSVG();
-                    
+            
                     postMessage(returnVal);
-                }
+        }
                 else
                 {
                     postMessage({error:"no results"});
