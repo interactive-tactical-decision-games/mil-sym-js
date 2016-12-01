@@ -1554,7 +1554,7 @@ armyc2.c2sd.renderer.utilities.SymbolUtilities = {};
         }
         return null;
     };
-
+    
     
 
     armyc2.c2sd.renderer.utilities.SymbolUtilities.isBasicShape = function (strSymbolID){
@@ -2367,7 +2367,7 @@ armyc2.c2sd.renderer.utilities.SymbolUtilities = {};
      armyc2.c2sd.renderer.utilities.SymbolUtilities.isEMSIncident = function (strSymbolID){
           return (strSymbolID.charAt(0)==='E' && strSymbolID.charAt(2)==='I'); 
      };
-          /**
+     /**
       * 
       * @param {String} strSymbolID
       * @returns {Boolean}
@@ -2437,8 +2437,8 @@ armyc2.c2sd.renderer.utilities.SymbolUtilities = {};
                 }
             }
         } 
-        
-        return blRetVal;
+    
+          return blRetVal;
      };
      /**
       * 
