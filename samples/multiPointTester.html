@@ -66,26 +66,29 @@ function testRender()
         var t = document.getElementById("symbol");
         var selectedText = t.options[t.selectedIndex].text;
 
-
         armyc2.c2sd.renderer.utilities.ErrorLogger.LogMessage("multiPoints3.html","testRender",selectedText);
         var modifiers = "";
         //AMBUSH EXAMPLE
-        var symbolCode = "GHGPSLA-------X";//ambush
+        //var symbolCode = "GHGPSLA-------X";//ambush
+		var symbolCode = "GHGPOAS---****X";//support by fire
         //var symbolCode = "GHGPGAA-------X"; //assembly area
         //var controlPoints = "66.26700036208742,30.62755038706961 66.27555681517738,30.64727776502703 66.25654247497746,30.64632704801704";
-        var controlPoints = "66.27555681517738,30.64727776502703 66.25654247497746,30.64632704801704 66.26700036208742,30.62755038706961";
+        //var controlPoints = "66.27555681517738,30.64727776502703 66.25654247497746,30.64632704801704 66.26700036208742,30.62755038706961";
+        var controlPoints = "20,30, 80,40, 0,0, 100,0";
         
         //var bbox = "66.25,30.60,66.28,30.65";
-        var bbox = "66.25,30.60,66.28,30.65";
+        //var bbox = "66.25,30.60,66.28,30.65";
         //var bbox = "-180.0,-90.0,180.0,90.0";
-        var scale = 500000.0;
+        var bbox = "-180.0,-90.0,180.0,90.0";
+        //var scale = 500000.0;
+        var scale = 100.0;
 		
         var formatGeoSVG = 6;
         var formatGeoCanvas = 3;
 		var formatGeoJSON = 2;
 		var formatKML = 0;
-		var pixelWidth = 800;
-		var pixelHeight = 600;
+		var pixelWidth = 500;
+		var pixelHeight = 500;
 		
 		//change this to format JSON to see the different output.
 		//var format = formatGeoJSON;
@@ -102,7 +105,8 @@ function testRender()
         {
             case 0://Ambush
                 symbolCode = "GHGPSLA-------X";//ambush
-                controlPoints = "66.27555681517738,30.64727776502703 66.25654247497746,30.64632704801704 66.26700036208742,30.62755038706961";
+                //controlPoints = "66.27555681517738,30.64727776502703 66.25654247497746,30.64632704801704 66.26700036208742,30.62755038706961";
+                controlPoints = "100.0,50.0 0.0,100.0 0.0,0.0";
                 break;
             case 1://FLOT
                 symbolCode = "GFGPGLF---****X";//flot
@@ -127,6 +131,480 @@ function testRender()
                 modifiers[mtg.AM_DISTANCE] = [300,1000];
                 modifiers[mtg.AN_AZIMUTH] = [315,45];
                 modifiers[mtg.X_ALTITUDE_DEPTH] = [0];
+                break;
+            case 4://Support by Fire
+				console.info( "Render support by fire. " );
+				symbolCode = "GFGPOAS---****X";//support by fire
+				controlPoints = "0.0,80.0 0.0,20.0 100.0,100.0 100.0,0.0";
+                break;
+            case 5://Occupy
+				console.info( "Render occupy. " );
+				symbolCode = "GFTPO-----****X";//occupy
+				controlPoints = "50,50 0,50 0,100 100,100";
+                break;
+            case 6://Fix
+				console.info( "Render fix. " );
+				symbolCode = "GHMPOEF---****X";//fix
+				controlPoints = "100,0 0,0 100,100";
+				var msa = armyc2.c2sd.renderer.utilities.MilStdAttributes;
+	            var mtg = armyc2.c2sd.renderer.utilities.ModifiersTG;
+				modifiers = {};
+				modifiers[msa.LineColor] = "0xFF0000";
+				modifiers[msa.fillColor] = "0x000000";
+				modifiers[mtg.T_UNIQUE_DESIGNATION_1] = "bababooey";
+				break;
+            case 7://Bypass
+				console.info( "Render bypass. " );
+				symbolCode = "GFTPY-----****X";//bypass
+				controlPoints = "100,100 100,0 0,50";
+                break;
+            case 8://Disrupt
+				console.info( "Render disrupt. " );
+				symbolCode = "GFMPOED---****X";//disrupt
+				controlPoints = "0,0 0,100 100,0 0,50";
+				var msa = armyc2.c2sd.renderer.utilities.MilStdAttributes;
+	            var mtg = armyc2.c2sd.renderer.utilities.ModifiersTG;
+				modifiers = {};
+				modifiers[msa.LineColor] = "0x000000";
+				modifiers[msa.fillColor] = "0x000000";
+				modifiers[mtg.T_UNIQUE_DESIGNATION_1] = "bababooey";
+				break;
+            case 9://Phase Line
+				console.info( "Render Phase Line. " );
+				symbolCode = "GFGPGLP---****X";//phase line
+				controlPts = "40.33167981149469,-74.63328161150378 40.33043042443883,-74.63076497204318 40.330942175696464,-74.6307969555444 40.33145392695409,-74.63076497204318 40.332349491654945,-74.63044513703109 40.33298918072698,-74.630125302019 40.3333410097166,-74.62983745050812 40.333404978623804,-74.62958158249845 40.333404978623804,-74.6291018299803 40.3333410097166,-74.62871802796579 40.3332770408094,-74.62852612695853 40.33321307190219,-74.62798240743798 40.3332770408094,-74.62766257242589 40.33346894753101,-74.62727877041138 40.33372482315983,-74.6270229024017 40.33404466769584,-74.62686298489565 40.334748325675086,-74.6266710838884 40.33516412357191,-74.62644719937994 40.335419999200724,-74.62619133137026 40.33625159499437,-74.62497595832431 40.336827315159205,-74.62433628830013 40.337658910952854,-74.62392050278442 40.337850817674465,-74.62376058527836 40.338074708849675,-74.62340876676507 40.338234631117686,-74.6228650472445 40.338234631117686,-74.62257719573363 40.33813867775688,-74.62235331122515 40.33772287986006,-74.62177760820339 40.33737105087044,-74.6214577731913 40.336987237427216,-74.62101000417437 40.33625159499437,-74.61985859813085 40.33609167272636,-74.61966669712359 40.33593175045835,-74.6193468621115 40.33573984373674,-74.61905901060061 40.335611905922335,-74.61899504359819 40.334972216850296,-74.61851529108006 40.33487626348949,-74.61851529108006 40.33404466769584,-74.61813148906555 40.333404978623804,-74.6176517365474 40.3332770408094,-74.61749181904136 40.33282925845897,-74.61710801702685 40.332573382830155,-74.61678818201476 40.332381476108544,-74.61650033050387 40.33231750720134,-74.61627644599541 40.33212560047973,-74.6158926439809";
+				//controlPoints = "0,0 5,5 10,10 15,15";
+				var msa = armyc2.c2sd.renderer.utilities.MilStdAttributes;
+	            var mtg = armyc2.c2sd.renderer.utilities.ModifiersTG;
+				modifiers = {};
+				modifiers[msa.LineColor] = "0x0000FF";
+				modifiers[msa.fillColor] = "0x000000";
+				modifiers[mtg.T_UNIQUE_DESIGNATION_1] = "A";
+				break;
+            case 10://Line of Contact
+				console.info( "Render Line of Contact. " );
+				symbolCode = "GFGPGLC---****X";//line of contact
+				controlPoints = "0,0 5,5 5,10 5,15";
+				var msa = armyc2.c2sd.renderer.utilities.MilStdAttributes;
+	            var mtg = armyc2.c2sd.renderer.utilities.ModifiersTG;
+				modifiers = {};
+				modifiers[msa.LineColor] = "0x0000FF";
+				modifiers[msa.fillColor] = "0x000000";
+				modifiers[mtg.T_UNIQUE_DESIGNATION_1] = "A";
+				break;
+            case 11://Forward Edge of Battle Area
+				console.info( "Render Forward Edge of Battle Area. " );
+				symbolCode = "GFGPDLF---****X";//forward edge of battle area
+				controlPoints = "0,0 5,5 10,10 15,15";
+				var msa = armyc2.c2sd.renderer.utilities.MilStdAttributes;
+	            var mtg = armyc2.c2sd.renderer.utilities.ModifiersTG;
+				modifiers = {};
+				modifiers[msa.LineColor] = "0x0000FF";
+				modifiers[msa.fillColor] = "0x000000";
+				modifiers[mtg.T_UNIQUE_DESIGNATION_1] = "A";
+				break;
+            case 12://Triple strand concertina wire
+				console.info( "Render Triple strand concertina wire. " );
+				symbolCode = "GFMPOWCT--****X";//Triple strand concertina wire
+				controlPoints = "0,0 5,5 10,10 15,15";
+                bbox = "0,0,100,100";//whole symbol will be calculated
+				var msa = armyc2.c2sd.renderer.utilities.MilStdAttributes;
+	            var mtg = armyc2.c2sd.renderer.utilities.ModifiersTG;
+				modifiers = {};
+				modifiers[msa.LineColor] = "0x0000FF";
+				modifiers[msa.LineWidth] = 1;
+				modifiers[msa.Width] = 2;
+				modifiers[msa.Length] = 2;
+				modifiers[msa.fillColor] = "0x000000";
+				modifiers[msa.PixelSize] = 8;
+				modifiers[mtg.T_UNIQUE_DESIGNATION_1] = "A";
+				pixelWidth = 500;
+				pixelHeight = 500;
+				scale = 10;
+				break;
+        case 13: //Battle Space
+                symbolCode = "GFGPGAA---****X"; //Battle Space
+                //Needs 3 anchor points
+                controlPoints = "66.26700036208742,30.62755038706961 66.27555681517738,30.64727776502703 66.25654247497746,30.64632704801704";
+                scale = 50000.0;
+                break;
+        case 14: //Seize
+                // symbolCode = "GFTPS-----****X"; //Seize
+                 symbolCode = "GFTPZ-----****X"; //Seize
+                //Point 1 defines the center point of the circle. Point 2 defines the tip of the arrowhead. Point 3 defines the 90 degree arc.
+                var controlPoints = "10,50 100,10 20,90 ";
+                pixelWidth = 100;
+                pixelHeight = 100;
+                break;
+        case 15: //Recon
+                symbolCode = "GFGPGAS---****X"; //Recon
+                //Point 1 defines the center point of the circle. Point 2 defines the tip of the arrowhead. Point 3 defines the 90 degree arc.
+                var controlPoints = "10,10 20,20 20,0 ";
+                pixelWidth = 100;
+                pixelHeight = 100;
+                break;
+        case 16: //Delay
+                symbolCode = "GFTPL-----****X"; //Delay
+                var controlPoints = "15,3 12,5 9,4";
+                //3 Control points
+                var scale = 1.0;
+                break;
+            case 17: //Main Attack Maneuver
+                symbolCode = "GFGPOLAGM-****X"; //Main Attack Maneuver
+                //var controlPoints = "18,5 15,5 14,4 14,2 17,6";
+                var controlPoints = "18,5 15,5 10,5 5,5 16,8";
+                var scale = .5;
+                pixelWidth = 300;
+                pixelHeight = 50;
+                break;
+            case 18: //Supporting Attack Maneuver
+                symbolCode = "GFGPOLAGS-****X"; //Supporting Attack Maneuver
+                var controlPoints = "18,5 15,5 14,4 14,2 17,6";
+                var scale = .5;
+                pixelWidth = 300;
+                pixelHeight = 300;
+                break;
+            case 19: //Air Axis of Advance
+                symbolCode = "GFGPOLAV--****X"; //Air Axis of Advance
+                var controlPoints = "18,5 15,5 14,4 14,2 17,6";
+                var scale = .5;
+                pixelWidth = 300;
+                pixelHeight = 300;
+                break;
+            case 20: //Direction of Attack
+                symbolCode = "G*GPOLKGM-****X"; //Direction of Attack
+                var controlPoints = "10,10 5,5";
+                pixelWidth = 300;
+                pixelHeight = 300;
+                break;
+            case 21: //Boundary
+                symbolCode = "GHGAGLB---****X"; //Boundary
+                var controlPoints = "10,10 30,20 50,10";
+                pixelWidth = 300;
+                pixelHeight = 300;
+                break;
+            case 22: //Free Fire Circular
+                symbolCode = "GFFPACFC--****X"; //Free Fire Circular
+                // Requires 1 anchor point and radius
+                var controlPoints = "10,10";
+                pixelWidth = 200;
+                pixelHeight = 200;
+                scale = 5000;
+                var mtg = armyc2.c2sd.renderer.utilities.ModifiersTG;
+                var msa = armyc2.c2sd.renderer.utilities.MilStdAttributes;
+                modifiers = {};
+                modifiers[msa.LineColor] = "0x0000FF";
+                modifiers[msa.LineWidth] = 1;
+                modifiers[msa.fillColor] = "0x000000";
+                modifiers[mtg.AM_DISTANCE] = [100, 0];
+                modifiers[mtg.T_UNIQUE_DESIGNATION_1] = "A";
+                break;
+          case 23: //No Fire
+                symbolCode = "G*FPACNC--****X"; //No Fire
+               //Requires 1 control point as center of circle and the radius
+                var controlPoints = "10,10";
+                pixelWidth = 100;
+                pixelHeight = 50;
+                scale = 10000;
+                var mtg = armyc2.c2sd.renderer.utilities.ModifiersTG;
+                var msa = armyc2.c2sd.renderer.utilities.MilStdAttributes;
+                modifiers = {};
+                modifiers[msa.LineColor] = "0x0000FF";
+                modifiers[msa.LineWidth] = 1;
+                modifiers[msa.fillColor] = "0x000000";
+                modifiers[mtg.AM_DISTANCE] = [10000];
+                modifiers[mtg.T_UNIQUE_DESIGNATION_1] = "A";
+                break;
+            case 24: //Restrictive Fire
+                symbolCode = "G*FPACRC--****X"; //Restrictive Fire
+                // 1 control point as center of circle and Radius
+                var controlPoints = "10,10";
+                pixelWidth = 200;
+                pixelHeight = 200;
+                scale = 5000;
+                var mtg = armyc2.c2sd.renderer.utilities.ModifiersTG;
+                var msa = armyc2.c2sd.renderer.utilities.MilStdAttributes;
+                modifiers = {};
+                modifiers[msa.LineColor] = "0x0000FF";
+                modifiers[msa.LineWidth] = 1;
+                modifiers[msa.fillColor] = "0x000000";
+                modifiers[mtg.AM_DISTANCE] = [100, 0];
+                modifiers[mtg.T_UNIQUE_DESIGNATION_1] = "A";
+                break;
+            case 25: //Circular Target
+                symbolCode = "GHFPATC---****X"; //Circular Target
+                // 1 Control point as center and Radius
+                var controlPoints = "10,10";
+                pixelWidth = 100;
+                pixelHeight = 100;
+                scale = 10000;
+                var mtg = armyc2.c2sd.renderer.utilities.ModifiersTG;
+                var msa = armyc2.c2sd.renderer.utilities.MilStdAttributes;
+                modifiers = {};
+                modifiers[msa.LineColor] = "0x0000FF";
+                modifiers[msa.LineWidth] = 1;
+                modifiers[msa.fillColor] = "0x000000";
+                modifiers[mtg.AM_DISTANCE] = [500];
+                modifiers[mtg.T_UNIQUE_DESIGNATION_1] = "Target";
+                break;
+            case 26: //Rectangular Target
+                symbolCode = "GHFPATR---****X"; 
+                var controlPoints = "0,10";
+                pixelWidth = 100;
+                pixelHeight =100;
+                scale = 500;
+                var mtg = armyc2.c2sd.renderer.utilities.ModifiersTG;
+                var msa = armyc2.c2sd.renderer.utilities.MilStdAttributes;
+                modifiers = {};
+                modifiers[msa.LineColor] = "0x0000FF";
+                modifiers[msa.LineWidth] = 1;
+                modifiers[msa.fillColor] = "0x000000";
+                modifiers[mtg.AM_DISTANCE] = [10,5];  // Set the width and height in the AM_DISTANCE array
+                modifiers[mtg.AN_AZIMUTH] = [45];      // Need to set something in the AN_AZIMUTH array, even if zero 
+                modifiers[mtg.T_UNIQUE_DESIGNATION_1] = "A";
+                break;
+            case 27: //Linear Target
+                symbolCode = "GHFPLT----****X";
+                var controlPoints = "5,5 10,10";
+                pixelWidth = 400;
+                pixelHeight = 400;
+                scale = 500;
+                var mtg = armyc2.c2sd.renderer.utilities.ModifiersTG;
+                var msa = armyc2.c2sd.renderer.utilities.MilStdAttributes;
+                modifiers = {};
+                modifiers[msa.LineColor] = "0x0000FF";
+                modifiers[msa.LineWidth] = 1;
+                modifiers[msa.fillColor] = "0x000000";
+                modifiers[mtg.T_UNIQUE_DESIGNATION_1] = "Linear Target";
+                break;
+            case 28: //Target Group
+                symbolCode = "GFFPATG---****X"; //Target Group
+                var controlPoints = "0,0  10,0, 10,10 0,10";
+                pixelWidth = 200;
+                pixelHeight = 200;
+                scale = 5000;
+                var mtg = armyc2.c2sd.renderer.utilities.ModifiersTG;
+                var msa = armyc2.c2sd.renderer.utilities.MilStdAttributes;
+                modifiers = {};
+                modifiers[msa.LineColor] = "0x0000FF";
+                modifiers[msa.LineWidth] = 1;
+                modifiers[msa.fillColor] = "0x000000";
+                modifiers[mtg.T_UNIQUE_DESIGNATION_1] = "Target Group";
+                break;
+            case 29: //Airspace Coordination Area
+                symbolCode = "G*FPACAI--****X"; //Airspace Coordination Area
+                var controlPoints = "0,0  10,0, 10,10 0,10";
+                pixelWidth = 200;
+                pixelHeight = 200;
+                scale = 5000;
+                var mtg = armyc2.c2sd.renderer.utilities.ModifiersTG;
+                var msa = armyc2.c2sd.renderer.utilities.MilStdAttributes;
+                modifiers = {};
+                modifiers[msa.LineColor] = "0x0000FF";
+                modifiers[msa.LineWidth] = 1;
+                modifiers[msa.fillColor] = "0x000000";
+                modifiers[mtg.T_UNIQUE_DESIGNATION_1] = "A";
+                break;
+            case 30: //Feint
+                symbolCode = "G*GPPA----****X"; //Feint
+                var controlPoints = "18,5 15,5 14,4 14,2 17,6";
+                pixelWidth = 200;
+                pixelHeight = 200;
+                scale = 5000;
+                var mtg = armyc2.c2sd.renderer.utilities.ModifiersTG;
+                var msa = armyc2.c2sd.renderer.utilities.MilStdAttributes;
+                modifiers = {};
+                modifiers[msa.LineColor] = "0x0000FF";
+                modifiers[msa.LineWidth] = 1;
+                modifiers[msa.fillColor] = "0x000000";
+                modifiers[mtg.AM_DISTANCE] = [100, 0];
+                modifiers[mtg.T_UNIQUE_DESIGNATION_1] = "Feint";
+                break;
+
+            case 31: //Security Screen
+                symbolCode = "GFTPUS----****X"; //Security Screen
+                var controlPoints = "0,0 50,10 50,10 100,0";
+                pixelWidth = 100;
+                pixelHeight = 10;
+                scale = 5000;
+                var mtg = armyc2.c2sd.renderer.utilities.ModifiersTG;
+                var msa = armyc2.c2sd.renderer.utilities.MilStdAttributes;
+                modifiers = {};
+                modifiers[msa.LineColor] = "0x0000FF";
+                modifiers[msa.LineWidth] = 1;
+                modifiers[msa.fillColor] = "0x000000";
+                modifiers[mtg.A_SYMBOL_ICON] = "SFGPUCRVA------";
+                modifiers[mtg.T_UNIQUE_DESIGNATION_1] = "Test";
+                break;
+            case 32: //Security Guard
+                symbolCode = "GFTPUG----****X"; //Security Guard
+                var controlPoints = "1,2 4,3 5,3 8,2";
+                pixelWidth = 400;
+                pixelHeight = 300;
+                scale = 5000;
+                var mtg = armyc2.c2sd.renderer.utilities.ModifiersTG;
+                var msa = armyc2.c2sd.renderer.utilities.MilStdAttributes;
+                modifiers = {};
+                modifiers[msa.LineColor] = "0x0000FF";
+                modifiers[msa.LineWidth] = 1;
+                modifiers[msa.fillColor] = "0x000000";
+                modifiers[mtg.A_SYMBOL_ICON] = "SFGPUCRVA------";
+                modifiers[mtg.T_UNIQUE_DESIGNATION_1] = "Test";
+                break;
+            case 33: //Security Cover
+                symbolCode = "GFTPUC----****X"; //Security Cover
+                var controlPoints = "1,2 4,3 5,3 8,2";
+                pixelWidth = 400;
+                pixelHeight = 300;
+                scale = 5000;
+                var mtg = armyc2.c2sd.renderer.utilities.ModifiersTG;
+                var msa = armyc2.c2sd.renderer.utilities.MilStdAttributes;
+                modifiers = {};
+                modifiers[msa.LineColor] = "0x0000FF";
+                modifiers[msa.LineWidth] = 1;
+                modifiers[msa.fillColor] = "0x000000";
+                modifiers[mtg.A_SYMBOL_ICON] = "SFGPUCRVA------";
+                modifiers[mtg.T_UNIQUE_DESIGNATION_1] = "Test";
+                break;
+            case 34: //Withdraw
+                symbolCode = "G*TPW-----****X"; //Withdraw
+                var controlPoints = "1,1 3,1 2,3";
+                pixelWidth = 100;
+                pixelHeight = 100;
+                scale = 5000;
+                var mtg = armyc2.c2sd.renderer.utilities.ModifiersTG;
+                var msa = armyc2.c2sd.renderer.utilities.MilStdAttributes;
+                modifiers = {};
+                modifiers[msa.LineColor] = "0x0000FF";
+                modifiers[msa.LineWidth] = 1;
+                modifiers[msa.fillColor] = "0x000000";
+                modifiers[mtg.A_SYMBOL_ICON] = "SFGPUCRVA------";
+                modifiers[mtg.T_UNIQUE_DESIGNATION_1] = "Test";
+                break;
+            case 35: //Retire
+                symbolCode = "GFTPM-----****X"; //Retire
+                var controlPoints = "0,0 80,0 80,80";
+                pixelWidth = 100;
+                pixelHeight = 100;
+                scale = 5000;
+                var mtg = armyc2.c2sd.renderer.utilities.ModifiersTG;
+                var msa = armyc2.c2sd.renderer.utilities.MilStdAttributes;
+                modifiers = {};
+                modifiers[msa.LineColor] = "0x0000FF";
+                modifiers[msa.LineWidth] = 1;
+                modifiers[msa.fillColor] = "0x000000";
+                modifiers[mtg.A_SYMBOL_ICON] = "SFGPUCRVA------";
+                modifiers[mtg.T_UNIQUE_DESIGNATION_1] = "Test";
+                break;
+            case 36: //Infiltration Lane 
+                symbolCode = "GFGPOLI---****X"; //Infiltration Lane 
+                var controlPoints = "1,2 3,3 4,4";
+                pixelWidth = 400;
+                pixelHeight = 300;
+                scale = 5000;
+                var mtg = armyc2.c2sd.renderer.utilities.ModifiersTG;
+                var msa = armyc2.c2sd.renderer.utilities.MilStdAttributes;
+                modifiers = {};
+                modifiers[msa.LineColor] = "0x0000FF";
+                modifiers[msa.LineWidth] = 1;
+                modifiers[msa.fillColor] = "0x000000";
+                modifiers[mtg.A_SYMBOL_ICON] = "SFGPUCRVA------";
+                modifiers[mtg.T_UNIQUE_DESIGNATION_1] = "Test";
+                break;
+            case 37: //Relief in Place
+                symbolCode = "GFTPR-----****X"; //Relief in Place
+                var controlPoints = "0,80 80,80 80,1 0,1";
+                pixelWidth = 100;
+                pixelHeight = 100;
+                scale = 5000;
+                var mtg = armyc2.c2sd.renderer.utilities.ModifiersTG;
+                var msa = armyc2.c2sd.renderer.utilities.MilStdAttributes;
+                modifiers = {};
+                modifiers[msa.LineColor] = "0x0000FF";
+                modifiers[msa.LineWidth] = 1;
+                modifiers[msa.fillColor] = "0x000000";
+                modifiers[mtg.A_SYMBOL_ICON] = "SFGPUCRVA------";
+                modifiers[mtg.T_UNIQUE_DESIGNATION_1] = "Test";
+                break;
+            case 38: //Rectangular Fire Support Area
+                symbolCode = "GFFPACSR--****X"; 
+                //var controlPoints = "0,10 50,10";
+                //var controlPoints = "25,0 50,50";
+                var controlPoints = "1,5 10,5";
+                pixelWidth = 500;
+                pixelHeight =500;
+                scale = 500;
+                var mtg = armyc2.c2sd.renderer.utilities.ModifiersTG;
+                var msa = armyc2.c2sd.renderer.utilities.MilStdAttributes;
+                modifiers = {};
+                modifiers[msa.LineColor] = "0x0000FF";
+                modifiers[msa.LineWidth] = 1;
+                modifiers[msa.fillColor] = "0x000000";
+                //modifiers[mtg.WIDTH] = 10;  // Set the width and height in the AM_DISTANCE array
+                //modifiers[mtg.LENGTH] = 10;  // Set the width and height in the AM_DISTANCE array
+                modifiers[mtg.AM_DISTANCE] = [100000];  // Set the width and height in the AM_DISTANCE array
+                //modifiers[mtg.AN_AZIMUTH] = [];      // Need to set something in the AN_AZIMUTH array, even if zero 
+                modifiers[mtg.T_UNIQUE_DESIGNATION_1] = "A";
+                break;
+            case 39: //Supporting Attack
+                symbolCode = "GFGPOLAGS-****X"; //Supporting Attack
+				var controlPoints = "-115.9801186571043,34.31409890364887 -115.98054072363033,34.313219128617725 -115.98087103656374,34.31232418505156 -115.98114629734158,34.3118236233959 -115.98142155811942,34.31147474709045 -115.9817151696158,34.31117137639006 -115.98213723614182,34.3108225000846 -115.98272445913454,34.31039778110405 -115.98329333140876,34.31010957893867 -115.9835685921866,34.30994272505345 -115.98375209937183,34.309775871168235 -115.97978174944176,34.31421923657537";
+                pixelWidth = 1000;
+                pixelHeight = 1000;
+                scale = 5000;
+                var mtg = armyc2.c2sd.renderer.utilities.ModifiersTG;
+                var msa = armyc2.c2sd.renderer.utilities.MilStdAttributes;
+                modifiers = {};
+                modifiers[msa.LineColor] = "0x0000FF";
+                modifiers[msa.LineWidth] = 1;
+            case 40: //Circular Restrictive Fire Area
+                symbolCode = "GFFPACRC--****X"; //Circular Restrictive Fire Area
+				var controlPoints = "-117.57159251495143,33.40604914563414";
+                pixelWidth = 402.90350176274205;
+                pixelHeight = 337.62878316734924;
+                scale = 5000;
+                var mtg = armyc2.c2sd.renderer.utilities.ModifiersTG;
+                var msa = armyc2.c2sd.renderer.utilities.MilStdAttributes;
+                modifiers = {};
+                modifiers[msa.LineColor] = "0x0000FF";
+                modifiers[msa.LineWidth] = 1;
+				modifiers[mtg.AM_DISTANCE] = [83.88316564159548];
+				bbox = "-117.5727,33.4052,-117.5707,33.4069";
+                break;
+            case 41: //Range Rings
+                symbolCode = "GFFPAXC---****X"; //Range Rings
+				var controlPoints = "-117.57159251495143,33.40604914563414";
+                pixelWidth = 402.90350176274205;
+                pixelHeight = 337.62878316734924;
+                scale = 5000;
+                var mtg = armyc2.c2sd.renderer.utilities.ModifiersTG;
+                var msa = armyc2.c2sd.renderer.utilities.MilStdAttributes;
+                modifiers = {};
+                modifiers[msa.LineColor] = "0x0000FF";
+                modifiers[msa.FillColor] = "0x00FFFF";
+                modifiers[msa.LineWidth] = 1;
+				modifiers[mtg.AM_DISTANCE] = [40, null, 80 ];
+				modifiers[mtg.X_ALTITUDE_DEPTH] = [null, , 1000];
+				bbox = "-117.5727,33.4052,-117.5707,33.4069";
+                break;
+            case 42: //Sector Fan
+                symbolCode = "GFFPAXS---****X"; //Sector Fan
+				var controlPoints = "-117.57159251495143,33.40604914563414";
+                //pixelWidth = 402.90350176274205;
+                //pixelHeight = 337.62878316734924;
+                pixelWidth = 1200;
+                pixelHeight = 1000;
+                scale = 5000;
+                var mtg = armyc2.c2sd.renderer.utilities.ModifiersTG;
+                var msa = armyc2.c2sd.renderer.utilities.MilStdAttributes;
+                modifiers = {};
+                modifiers[msa.LineColor] = "0x0000FF";
+                //modifiers[msa.FillColor] = "0x00FFFF";
+                modifiers[msa.LineWidth] = 1;
+				modifiers[mtg.AM_DISTANCE] = [ 15, 25, 35, 50 ];
+				modifiers[mtg.X_ALTITUDE_DEPTH] = [null, 500, 1000, 1500, 2000];
+				modifiers[mtg.AN_AZIMUTH] = [ 0, 0, 20, 120, 45, 120, 45, 125, 45, 125 ];
+				bbox = "-117.5727,33.4052,-117.5707,33.4069";
                 break;
             default:
                 break;
@@ -153,6 +631,7 @@ function testRender()
 		{
 			//RenderSymbol2D for 2D maps, JSON Recommended for simpler output.
 			json = rendererMP.RenderSymbol2D("ID","Name","Description", symbolCode, controlPoints, pixelWidth, pixelHeight, bbox, modifiers,format);
+			//json = rendererMP.RenderSymbol2D("ID","Name","Description", symbolCode, controlPoints, pixelWidth, pixelHeight, null, modifiers,format);
 		}
 		var stop = Date.now();
 		var timeAmbush = (stop-start)/1000;
@@ -215,7 +694,7 @@ function preload() {
 
 	</script>
 </head>
-<body bgcolor="Cyan" onload="preload();">
+<body bgcolor="Beige" onload="preload();">
 Draw Canvas/SVG Test:
 <canvas id="preview" width="30" height="30"></canvas><img id="preview2" src="" alt="" height="30" width="30"><br>
     <select id="format">
@@ -229,6 +708,45 @@ Draw Canvas/SVG Test:
       <option value=1>FLOT</option>
       <option value=2>Assembly Area</option>
       <option value=3>Sector Range Fan</option>
+      <option value=4>Support by Fire</option>
+      <option value=5>Occupy</option>
+      <option value=6>Fix</option>
+      <option value=7>Bypass</option>
+      <option value=8>Disrupt</option>
+	  <option value=9>Phase Line</option>
+	  <option value=10>Line of Contact</option>
+	  <option value=11>Forward Edge of Battle Area</option>
+	  <option value=12>Triple Strand Concertina Wire</option>
+      <option value=13>Battle Position</option>
+      <option value=14>Seize</option>
+      <option value=15>Recon</option>
+      <option value=16>Delay</option>
+      <option value=17>Main Attack</option>
+      <option value=18>Support Attack</option>
+      <option value=19>Air Axis of Advance</option>
+      <option value=20>Direction of Attack</option>
+      <option value=21>Boundary</option>
+      <option value=22>Free Fire</option>
+      <option value=23>No Fire</option>
+      <option value=24>Restrictive Fire</option>
+      <option value=25>Circular Target</option>
+      <option value=26>Rectangular Target</option>
+      <option value=27>Linear Target</option>
+      <option value=28>Target Group</option>
+      <option value=29>Airspace Coordination Area</option>
+      <option value=30>Feint</option>
+      <option value=31>Security Screen</option>
+      <option value=32>Security Guard</option>
+      <option value=33>Security Cover</option>
+      <option value=34>Withdraw</option>
+      <option value=35>Retire</option>
+      <option value=36>Infiltration Lane</option>
+      <option value=37>Relief in Place</option>
+      <option value=38>Rectangular Fire Support Area</option>
+      <option value=39>Supporting Attack</option>
+      <option value=40>Circular Restrictive Fire Area</option>
+      <option value=41>Range Rings</option>
+      <option value=42>Sector Fan</option>
     </select>
     <button type='button' onclick='testRender()'>Test Multipoint</button>
 	<button type='button' onclick='cleartext()'>Clear</button>
