@@ -601,10 +601,30 @@ function testRender()
                 modifiers[msa.LineColor] = "0x0000FF";
                 //modifiers[msa.FillColor] = "0x00FFFF";
                 modifiers[msa.LineWidth] = 1;
-				modifiers[mtg.AM_DISTANCE] = [ 15, 25, 35, 50 ];
-				modifiers[mtg.X_ALTITUDE_DEPTH] = [null, 500, 1000, 1500, 2000];
-				modifiers[mtg.AN_AZIMUTH] = [ 0, 0, 20, 120, 45, 120, 45, 125, 45, 125 ];
+				modifiers[mtg.AM_DISTANCE] = [ 15, 25, 35, 50, 80 ];
+				//modifiers[mtg.X_ALTITUDE_DEPTH] = [null, 500, 1000, 1500, 2000];
+				modifiers[mtg.AN_AZIMUTH] = [ 15, 135, 20, 120, 45, 120, 45, 125, 45, 125 ];
 				bbox = "-117.5727,33.4052,-117.5707,33.4069";
+                break;
+            case 43: //Destroy
+                symbolCode = "GFTPD-----****X"; //Destroy
+				var controlPoints = "-117.57159251495143,33.40604914563414";
+                //pixelWidth = 402.90350176274205;
+                //pixelHeight = 337.62878316734924;
+                pixelWidth = 100;
+                pixelHeight = 100;
+                scale = 5000;
+                var mtg = armyc2.c2sd.renderer.utilities.ModifiersTG;
+                var msa = armyc2.c2sd.renderer.utilities.MilStdAttributes;
+                modifiers = {};
+                modifiers[msa.LineColor] = "0x0000FF";
+                //modifiers[msa.FillColor] = "0x00FFFF";
+                modifiers[msa.LineWidth] = 1;
+				//modifiers[mtg.AM_DISTANCE] = [ 15, 25, 35, 50, 80 ];
+				//modifiers[mtg.X_ALTITUDE_DEPTH] = [null, 500, 1000, 1500, 2000];
+				//modifiers[mtg.AN_AZIMUTH] = [ 15, 135, 20, 120, 45, 120, 45, 125, 45, 125 ];
+				bbox = "-117.5727,33.4052,-117.5707,33.4069";
+				//bbox = null;
                 break;
             default:
                 break;
@@ -747,6 +767,7 @@ Draw Canvas/SVG Test:
       <option value=40>Circular Restrictive Fire Area</option>
       <option value=41>Range Rings</option>
       <option value=42>Sector Fan</option>
+      <option value=43>Destroy</option>	  
     </select>
     <button type='button' onclick='testRender()'>Test Multipoint</button>
 	<button type='button' onclick='cleartext()'>Clear</button>
