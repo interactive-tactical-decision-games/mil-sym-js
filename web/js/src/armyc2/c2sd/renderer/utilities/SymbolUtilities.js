@@ -881,8 +881,9 @@ armyc2.c2sd.renderer.utilities.SymbolUtilities.rendererSettings = armyc2.c2sd.re
             }
             else if(this.isObstacle(symbolID))
             {
+                retColor = armyc2.c2sd.renderer.utilities.Color.BLACK;	// Black
                 //retColor = armyc2.c2sd.renderer.utilities.Color.GREEN;	// Green
-                retColor =  armyc2.c2sd.renderer.utilities.SymbolUtilities.rendererSettings.getNeutralGraphicLineColor();
+                //retColor =  armyc2.c2sd.renderer.utilities.SymbolUtilities.rendererSettings.getNeutralGraphicLineColor();
             }
             else if(this.isEMSNaturalEvent(symbolID))
             {
